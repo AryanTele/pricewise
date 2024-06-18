@@ -1,7 +1,10 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import Product from "../models/product.model";
 import { scrapeAmazonProduct } from "../scrapper";
 import { connectToDB } from "../scrapper/mongoose";
+import { getAveragePrice, getHighestPrice, getLowestPrice } from "../utils";
 
 export async function scrapeAndStoreProduct(productUrl: string) {
   if (!productUrl) return;
@@ -12,8 +15,36 @@ export async function scrapeAndStoreProduct(productUrl: string) {
     if (!scrapeProduct) return;
 
     let product = scrapeProduct;
-    // const existingProduct = await product
+    const existingProduct = await Product.findOne({ url: scrapeProduct.url });
+    if (existingProduct) {
+      const updatedPriceHistory: any = [
+        ...existingProduct.priceHistory,
+        { price: scrapeProduct.currentPrice },
+      ];
+      product = {
+        ...scrapeProduct,
+        priceHistory: updatedPriceHistory,
+        lowestPrice: getLowestPrice(updatedPriceHistory),
+        highestPrice: getHighestPrice(updatedPriceHistory),
+        averagePrice: getAveragePrice(updatedPriceHistory),
+      };
+    }
+    const newProduct = await Product.findOneAndUpdate(
+      {
+        url: scrapeProduct.url,
+      },
+      product,
+      { upsert: true, new: true }
+    );
+
+    revalidatePath(`/products/${newProduct._id}`);
   } catch (error: any) {
     throw new Error(`Failed to create/update product: ${error.message}`);
   }
+}
+
+export async function getProductByID(productId: string) {
+  try {
+    connectToDB();
+  } catch (error) {}
 }
