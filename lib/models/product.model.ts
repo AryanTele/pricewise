@@ -1,0 +1,33 @@
+import mongoose from "mongoose";
+
+const productSchema = new mongoose.Schema(
+  {
+    url: { type: String, required: true, unique: true },
+    currency: { type: String, required: true },
+    image: { type: String, required: true },
+    currentPrice: { type: Number, required: true },
+    originalPrice: { type: Number, required: true },
+    priceHistory: [
+      {
+        price: { type: Number, required: true },
+        date: { type: Date, default: Date.now },
+      },
+    ],
+    lowestPrice: { type: Number },
+    highestPrice: { type: Number },
+    averagePrice: { type: Number },
+    category: { type: String },
+    reviewCount: { type: Number },
+    isOutOfStock: { type: Boolean },
+    users: [{ email: { type: String, required: true } }],
+    default: [],
+  },
+  { timestamps: true }
+);
+
+// turn schema into model
+
+const product =
+  mongoose.models.Product || mongoose.model("Product", productSchema);
+
+export default product;
