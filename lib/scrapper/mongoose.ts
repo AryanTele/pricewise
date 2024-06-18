@@ -1,4 +1,4 @@
-import mongodb from "mongoose";
+import mongoose from "mongoose";
 
 let isConnected = false; //variable to tract the connection status
 
