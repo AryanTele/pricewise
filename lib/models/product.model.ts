@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
+    title: { type: String, required: true },
     url: { type: String, required: true, unique: true },
     currency: { type: String, required: true },
     image: { type: String, required: true },
@@ -19,6 +20,7 @@ const productSchema = new mongoose.Schema(
     category: { type: String },
     reviewCount: { type: Number },
     isOutOfStock: { type: Boolean },
+
     users: [{ email: { type: String, required: true } }],
     default: [],
   },
