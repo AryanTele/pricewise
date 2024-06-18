@@ -22,11 +22,19 @@ const isValidAmazonProductURL = (url: string) => {
 
 const Searchbar = () => {
   const [searchPrompt, setsearchPrompt] = useState("");
+  const [isLoading, setisLoading] = useState(false);
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const isValidLink = isValidAmazonProductURL(searchPrompt);
-    alert(isValidLink ? "Valid Link" : "Invalid Link");
+    if (!isValidLink) return alert("Please provide a valid amazon link");
+
+    try {
+      setisLoading(true);
+    } catch (error) {
+    } finally {
+      setisLoading(false);
+    }
   };
   return (
     <form className="flex flex-wrap gap-4 mt-12" onSubmit={handleSubmit}>
@@ -37,8 +45,12 @@ const Searchbar = () => {
         placeholder="Enter product link"
         className="searchbar-input"
       />
-      <button type="submit" className="searchbar-btn">
-        Search
+      <button
+        type="submit"
+        className="searchbar-btn"
+        disabled={searchPrompt === ""}
+      >
+        {isl}
       </button>
     </form>
   );
