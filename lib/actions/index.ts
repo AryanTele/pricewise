@@ -46,5 +46,21 @@ export async function scrapeAndStoreProduct(productUrl: string) {
 export async function getProductByID(productId: string) {
   try {
     connectToDB();
-  } catch (error) {}
+    const product = await Product.findOne({ _id: productId });
+    if (!product) return null;
+
+    return product;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getAllProduct() {
+  try {
+    connectToDB();
+    const products = await Product.find();
+    return products;
+  } catch (error) {
+    console.log(error);
+  }
 }
