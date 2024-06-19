@@ -21,7 +21,7 @@ export type Product = {
   discountRate: number;
   description: string;
   category: string;
-  reviewCount: number;
+  reviewsCount: number;
   stars: number;
   isOutOfStock: Boolean;
   users?: User[];
