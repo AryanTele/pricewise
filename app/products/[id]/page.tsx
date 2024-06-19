@@ -96,8 +96,28 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                     {product.stars || 25}
                   </p>
                 </div>
+
+                <div className="product-reviews">
+                  <Image
+                    src="/assets/icons/comment.svg"
+                    alt="comment"
+                    width={16}
+                    height={16}
+                  />
+                  <p className="text-sm text-secondary font-semibold">
+                    {product.reviewCount}
+                  </p>
+                </div>
               </div>
+              <p className="text-sm text-black opacity-50">
+                <span className="text-primary-green font-semibold">93% </span>{" "}
+                of buyers have recommended this.
+              </p>
             </div>
+          </div>
+
+          <div className="my-7 flex flex-col gap-5">
+            <div className="flex gap-5 flex-wrap"></div>
           </div>
         </div>
       </div>
