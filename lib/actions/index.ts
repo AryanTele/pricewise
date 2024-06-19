@@ -1,5 +1,4 @@
 "use server";
-
 import { revalidatePath } from "next/cache";
 import Product from "../models/product.model";
 import { scrapeAmazonProduct } from "../scrapper";
@@ -12,29 +11,32 @@ export async function scrapeAndStoreProduct(productUrl: string) {
   if (!productUrl) return;
   try {
     connectToDB();
-    // actual scraping
-    const scrapeProduct = await scrapeAmazonProduct(productUrl);
-    if (!scrapeProduct) return;
 
-    let product = scrapeProduct;
-    const existingProduct = await Product.findOne({ url: scrapeProduct.url });
+    const scrapedProduct = await scrapeAmazonProduct(productUrl);
+
+    if (!scrapedProduct) return;
+
+    let product = scrapedProduct;
+
+    const existingProduct = await Product.findOne({ url: scrapedProduct.url });
+
     if (existingProduct) {
       const updatedPriceHistory: any = [
         ...existingProduct.priceHistory,
-        { price: scrapeProduct.currentPrice },
+        { price: scrapedProduct.currentPrice },
       ];
+
       product = {
-        ...scrapeProduct,
+        ...scrapedProduct,
         priceHistory: updatedPriceHistory,
         lowestPrice: getLowestPrice(updatedPriceHistory),
         highestPrice: getHighestPrice(updatedPriceHistory),
         averagePrice: getAveragePrice(updatedPriceHistory),
       };
     }
+
     const newProduct = await Product.findOneAndUpdate(
-      {
-        url: scrapeProduct.url,
-      },
+      { url: scrapedProduct.url },
       product,
       { upsert: true, new: true }
     );
