@@ -73,7 +73,6 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               </div>
             </div>
           </div>
-
           <div className="product-info">
             <div className="flex flex-col gap-2">
               <p className="text-[34px] text-secondary font-bold">
@@ -116,7 +115,6 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               </p>
             </div>
           </div>
-
           <div className="my-7 flex flex-col gap-5">
             <div className="flex gap-5 flex-wrap">
               <PriceInfoCard
@@ -150,7 +148,22 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               />
             </div>
           </div>
+          Modal
         </div>
+      </div>
+      <div className="flex flex-col gap-16 border-2 border-red-500">
+        <div className="flex flex-col gap-5"></div>
+        <button className="btn w-fit mx-auto flex items-center justify-center gap-3 min-w-[200px]">
+          <Image
+            src="/assets/icons/bag.svg"
+            alt="check"
+            width={22}
+            height={22}
+          />
+          <Link href="/" className="text-base text-white">
+            Buy Now
+          </Link>
+        </button>
       </div>
     </div>
   );
