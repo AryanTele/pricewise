@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/types";
+import { formatNumber } from "@/lib/utils";
 
 type Props = {
   params: { id: string };
@@ -41,13 +42,61 @@ const ProductDetails = async ({ params: { id } }: Props) => {
             </div>
 
             <div className="flex items-center gap-3">
-              <Image
-                src="/assets/icons/red-heart.svg"
-                alt="heart"
-                width={20}
-                height={20}
-              />
-              <p className="text-base font-semibold text-[#D46F77]"></p>
+              <div className="product-hearts">
+                <Image
+                  src="/assets/icons/red-heart.svg"
+                  alt="heart"
+                  width={20}
+                  height={20}
+                />
+
+                <p className="text-base font-semibold text-[#D46F77]">
+                  {product.reviewCount}
+                </p>
+              </div>
+              <div className="p-2 bg-white-200 rounded-10">
+                <Image
+                  src="/assets/icons/bookmark.svg"
+                  alt="bookmark"
+                  width={20}
+                  height={20}
+                />
+              </div>
+              <div className="p-2 bg-white-200 rounded-10">
+                <Image
+                  src="/assets/icons/share.svg"
+                  alt="share"
+                  width={20}
+                  height={20}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="product-info">
+            <div className="flex flex-col gap-2">
+              <p className="text-[34px] text-secondary font-bold">
+                {product.currency} {formatNumber(product.currentPrice)}
+              </p>
+              <p className="text-[21px] text-black opacity-50 line-through">
+                {product.currency} {formatNumber(product.originalPrice)}
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-3">
+                <div className="product-stars">
+                  <Image
+                    src="/assets/icons/star.svg"
+                    alt="stars"
+                    width={16}
+                    height={16}
+                  />
+                  <p className="text-sm text-primary-orange font-semibold">
+                    {product.stars || 25}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
