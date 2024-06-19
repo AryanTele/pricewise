@@ -9,7 +9,12 @@ import {
 } from "@headlessui/react";
 import { useState } from "react";
 import Image from "next/image";
-const Modal = () => {
+import { addUserEmailToProduct } from "@/lib/actions";
+interface Props {
+  productId: string;
+}
+
+const Modal = ({ productId }: Props) => {
   let [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setisSubmitting] = useState(false);
   const [email, setEmail] = useState("");
@@ -17,6 +22,7 @@ const Modal = () => {
     e.preventDefault();
     setisSubmitting(true);
 
+    await addUserEmailToProduct(productId, email);
     setisSubmitting(false);
     setEmail("");
     closeModal();
