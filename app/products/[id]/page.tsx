@@ -108,7 +108,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                     height={16}
                   />
                   <p className="text-sm text-secondary font-semibold">
-                    {product.reviewCount}
+                    {product.reviewsCount}
                   </p>
                 </div>
               </div>
@@ -151,7 +151,7 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               />
             </div>
           </div>
-          <Modal productId={id} />
+          <Modal productId="{id}" />
         </div>
       </div>
       <div className="flex flex-col gap-16">
