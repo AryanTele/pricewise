@@ -1,4 +1,4 @@
-import { getProductByID, getSimilarProduct } from "@/lib/actions";
+import { getProductById, getSimilarProducts } from "@/lib/actions";
 import { redirect } from "next/navigation";
 import React from "react";
 import Image from "next/image";
@@ -14,10 +14,10 @@ type Props = {
 };
 
 const ProductDetails = async ({ params: { id } }: Props) => {
-  const product: Product = await getProductByID(id);
+  const product: Product = await getProductById(id);
   if (!product) redirect("/");
 
-  const similarProduct = await getSimilarProduct(id);
+  const similarProduct = await getSimilarProducts(id);
   return (
     <div className="product-container">
       <div className="flex gap-28 xl:flex-row flex-col">
