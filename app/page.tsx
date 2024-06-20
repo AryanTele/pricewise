@@ -2,11 +2,11 @@ import React from "react";
 import Image from "next/image";
 import Searchbar from "@/components/Searchbar";
 import HeroCarousel from "@/components/HeroCarousel";
-import { getAllProduct } from "@/lib/actions";
+import { getAllProducts } from "@/lib/actions";
 import ProductCard from "@/components/ProductCard";
 
 const Home = async () => {
-  const allProducts = await getAllProduct();
+  const allProducts = await getAllProducts();
   return (
     <>
       <section className="px-6 md:px-20 py-24">
